@@ -10,12 +10,135 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id String @id @default(uuid())
-  first_name String @db.VarChar(50)
-  last_name String @db.VarChar(50)
+  id             String  @id @default(uuid())
+  first_name     String  @db.VarChar(50)
+  last_name      String  @db.VarChar(50)
+  email          String  @db.VarChar(50)
+  phone          String  @db.VarChar(12)
+  is_active      Boolean @default(false)
+  role           Int     @default(1)
+  verified_wp    Boolean @default(false)
+  verified_phone Boolean @default(false)
+  verified_email Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GlobalDiagnosisTest {
+  id        String   @id @default(uuid())
+  test_code String   @db.Char(4)
+  test_name String   @db.VarChar(50)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  DCTest    DCTest[]
+}
+
+model DiagnosticCenter {
+  id   String @id @default(uuid())
+  name String @db.VarChar(50)
+
   email String @db.VarChar(50)
   phone String @db.VarChar(12)
-  is_active Boolean @default(false)
+
+  address String
+  pincode String @db.VarChar(8)
+  city    String @db.VarChar(10)
+
+  contact_person_name  String @db.VarChar(10)
+  contact_person_email String @db.VarChar(50)
+  contact_person_phone String @db.VarChar(12)
+
+  operating_start_time String
+  operating_end_time   String
+
+  working_days String
+  center_type  String
+
+  created_at  String
+  updated_at  String
+  DCTest      DCTest[]
+  Appointment Appointment[]
+}
+
+model DCTest {
+  id                   String           @id @default(uuid())
+  diagnostic_center    DiagnosticCenter @relation(fields: [diagnostic_center_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  diagnostic_center_id String
+
+  global_diagnosis_test    GlobalDiagnosisTest @relation(fields: [global_diagnosis_test_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  global_diagnosis_test_id String
+
+  base_price Float
+  cust_price Float
+
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+  AppointmentDiagnosisTest AppointmentDiagnosisTest[]
+}
+
+model Appointment {
+  id                   String           @id @default(uuid())
+  diagnostic_centre    DiagnosticCenter @relation(fields: [diagnostic_center_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  diagnostic_center_id String
+  visit_date           DateTime
+  is_verified          Boolean          @default(false)
+  status               String
+
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+  AppointmentDiagnosisTest AppointmentDiagnosisTest[]
+  PaymentUpdate            PaymentUpdate[]
+  Feedback                 Feedback[]
+  DCTestReport             DCTestReport[]
+}
+
+model AppointmentDiagnosisTest {
+  id String @id @default(uuid())
+
+  dc_test    DCTest @relation(fields: [dc_test_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  dc_test_id String
+
+  appointment    Appointment @relation(fields: [appointment_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  appointment_id String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PaymentUpdate {
+  id             String      @id @default(uuid())
+  appointment    Appointment @relation(fields: [appointment_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  appointment_id String
+  payment_status String
+  amount         Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Feedback {
+  id             String      @id @default(uuid())
+  appointment    Appointment @relation(fields: [appointment_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  appointment_id String
+
+  rating           Int
+  feedback_comment String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DCTestReport {
+  id String @id @default(uuid())
+
+  appointment    Appointment @relation(fields: [appointment_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  appointment_id String
+
+  report_link String
+  status      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
