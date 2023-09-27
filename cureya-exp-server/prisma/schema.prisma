@@ -14,13 +14,27 @@ model User {
   id             String  @id @default(uuid())
   first_name     String  @db.VarChar(50)
   last_name      String  @db.VarChar(50)
-  email          String  @db.VarChar(50)
-  phone          String  @db.VarChar(12)
-  is_active      Boolean @default(false)
+  email          String  @unique() @db.VarChar(50)
+  phone          String  @unique() @db.VarChar(12)
+  password       String  @db.VarChar(250)
+  is_active      Boolean @default(true)
   role           Int     @default(1)
   verified_wp    Boolean @default(false)
   verified_phone Boolean @default(false)
   verified_email Boolean @default(false)
+  // Add Date of birth
+
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  AuthToken AuthToken[]
+}
+
+model AuthToken {
+  id String @id @default(uuid())
+
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user_id String @unique
+  token   String @default(uuid())
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -52,6 +66,7 @@ model DiagnosticCenter {
 
   operating_start_time String
   operating_end_time   String
+  does_home_visit      Boolean @default(false)
 
   working_days String
   center_type  String
@@ -85,6 +100,7 @@ model Appointment {
   visit_date           DateTime
   is_verified          Boolean          @default(false)
   status               String
+  is_home_visit        Boolean          @default(false)
 
   createdAt                DateTime                   @default(now())
   updatedAt                DateTime                   @updatedAt
@@ -92,6 +108,23 @@ model Appointment {
   PaymentUpdate            PaymentUpdate[]
   Feedback                 Feedback[]
   DCTestReport             DCTestReport[]
+  HomeVisitAddress         HomeVisitAddress[]
+}
+
+model HomeVisitAddress {
+  id String @id @default(uuid())
+
+  appointment    Appointment @relation(fields: [appointment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  appointment_id String
+
+  address_line_one String
+  address_line_two String
+  city             String
+  landmark         String
+  postal_code      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model AppointmentDiagnosisTest {
