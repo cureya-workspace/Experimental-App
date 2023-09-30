@@ -16,7 +16,9 @@ export class DiagnosticCenterController {
     // Validation Block
     try {
       PAGE = params.page ? Number.parseInt(params.page) : 1;
-      COUNT = Number.parseInt(process.env.ENTITY_COUNT_PER_PAGE as unknown as string);
+      COUNT = Number.parseInt(
+        process.env.ENTITY_COUNT_PER_PAGE as unknown as string
+      );
 
       if (PAGE === 0) {
         throw new Error("Please provide valid page number.");
@@ -34,8 +36,15 @@ export class DiagnosticCenterController {
         pincode: params.pincode ? params.pincode : undefined,
         city: params.city ? params.city : undefined,
       },
-      skip: 5 * (PAGE - 1),
-      take: 10,
+      skip: COUNT * (PAGE - 1),
+      take: COUNT,
+      select: {
+        name: true,
+        phone: true,
+        address: true,
+        pincode: true,
+        city: true,
+      },
     });
     const totalCount = await prismaClient.diagnosticCenter.count({
       where: {
@@ -44,37 +53,36 @@ export class DiagnosticCenterController {
       },
     });
 
-    console.log(result)
-
-    const hasNextData = Math.ceil(result.length / totalCount) < PAGE;
+    const totalPages = Math.ceil(totalCount / COUNT);
+    const hasNextData = totalPages > PAGE;
     const hasPreviousData = PAGE !== 1;
 
     try {
-      
-    const response = {
-      success: true,
-      paging: {
-        totalCount: totalCount,
-        next: hasNextData
-          ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
-              PAGE + 1
-            }`
-          : false,
-        previous: hasPreviousData
-          ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
-              PAGE - 1
-            }`
-          : false,
-      },
-      data: result,
-    };
+      const response = {
+        success: true,
+        paging: {
+          totalPages: totalPages,
+          totalCount: totalCount,
+          next: hasNextData
+            ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
+                PAGE + 1
+              }`
+            : null,
+          previous: hasPreviousData
+            ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
+                PAGE - 1
+              }`
+            : null,
+        },
+        data: result,
+      };
 
-    return res.json(response);
+      return res.json(response);
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       return res.status(500).json({
         success: false,
-        message: error.messsage
+        message: error.message,
       });
     }
   }
@@ -93,10 +101,6 @@ export class DiagnosticCenterController {
       center_type,
     } = req.body;
 
-    const emailRegex: RegExp =
-      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    const phoneRegex: RegExp = /^(?:\+\d{1,3})?(?:\d{10,15})$/;
-
     // Validation block
     try {
       assert(name, "please provide name");
@@ -109,14 +113,6 @@ export class DiagnosticCenterController {
       assert(operating_end_time, "Please provide operating end time");
       assert(center_type, "please provide center type");
       assert(does_home_visit !== undefined, "please provide does_home_visit");
-
-      // if (!emailRegex.test(email)) {
-      //   throw new Error('Please provide valid email');
-      // }
-
-      // if (!phoneRegex.test(phone)) {
-      //   throw new Error('Please provide valid phone');
-      // }
     } catch (error: any) {
       return res.status(400).json({
         success: false,
@@ -136,19 +132,19 @@ export class DiagnosticCenterController {
           operating_start_time: operating_start_time,
           operating_end_time: operating_end_time,
           does_home_visit: does_home_visit,
-          center_type: center_type,          
+          center_type: center_type,
         },
       });
 
       return res.json({
         success: true,
-        data: center
+        data: center,
       });
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       return res.status(500).json({
         success: false,
-        message: error.messsage
+        message: error.message,
       });
     }
   }

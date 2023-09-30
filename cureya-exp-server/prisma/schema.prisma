@@ -68,13 +68,13 @@ model DiagnosticCenter {
   operating_end_time   String
   does_home_visit      Boolean @default(false)
 
-  is_active Boolean @default(true)
-  is_deleted Boolean @default(false)
+  is_active    Boolean @default(true)
+  is_deleted   Boolean @default(false)
   working_days String?
   center_type  String
 
-createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   DCTest      DCTest[]
   Appointment Appointment[]
 }
