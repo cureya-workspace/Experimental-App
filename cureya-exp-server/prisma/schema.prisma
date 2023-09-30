@@ -51,28 +51,30 @@ model GlobalDiagnosisTest {
 
 model DiagnosticCenter {
   id   String @id @default(uuid())
-  name String @db.VarChar(50)
+  name String @db.VarChar(150)
 
-  email String @db.VarChar(50)
-  phone String @db.VarChar(12)
+  email String @db.VarChar(150)
+  phone String @db.VarChar(80)
 
   address String
-  pincode String @db.VarChar(8)
-  city    String @db.VarChar(10)
+  pincode String @db.VarChar(18)
+  city    String @db.VarChar(110)
 
-  contact_person_name  String @db.VarChar(10)
-  contact_person_email String @db.VarChar(50)
-  contact_person_phone String @db.VarChar(12)
+  contact_person_name  String? @db.VarChar(10)
+  contact_person_email String? @db.VarChar(50)
+  contact_person_phone String? @db.VarChar(12)
 
   operating_start_time String
   operating_end_time   String
   does_home_visit      Boolean @default(false)
 
-  working_days String
+  is_active Boolean @default(true)
+  is_deleted Boolean @default(false)
+  working_days String?
   center_type  String
 
-  created_at  String
-  updated_at  String
+createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   DCTest      DCTest[]
   Appointment Appointment[]
 }
