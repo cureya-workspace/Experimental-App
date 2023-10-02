@@ -2,6 +2,7 @@ import { Router } from 'express'
 import userRouter from './user.router';
 import authRouter from './auth.router';
 import diagnosticCenterRouter from './diagnostic-center.router';
+import globalDiagnosticTestRouter from './global-test.router';
 
 const baseRouter: Router = Router();
 
@@ -9,6 +10,6 @@ const baseRouter: Router = Router();
 baseRouter.use('/user', userRouter);
 baseRouter.use('/auth', authRouter);
 baseRouter.use('/diagnostic-center', diagnosticCenterRouter);
-
+baseRouter.use('/global-test', globalDiagnosticTestRouter);
 
 export default baseRouter; 

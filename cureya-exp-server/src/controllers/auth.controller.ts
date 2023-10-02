@@ -87,7 +87,6 @@ export default class AuthController {
   }
 
   async logout(req: Request, res: Response): Promise<Response> {
-
     return res.json({});
   }
 }

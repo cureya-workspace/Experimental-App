@@ -66,12 +66,12 @@ export class DiagnosticCenterController {
           next: hasNextData
             ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
                 PAGE + 1
-              }`
+              }${params.pincode ? '&pincode=' + params.pincode : params.city ? '&city=' + params.city : ''}`
             : null,
           previous: hasPreviousData
             ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
                 PAGE - 1
-              }`
+              }${params.pincode ? '&pincode=' + params.pincode : params.city ? '&city=' + params.city : ''}`
             : null,
         },
         data: result,

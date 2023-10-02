@@ -42,11 +42,14 @@ model AuthToken {
 
 model GlobalDiagnosisTest {
   id        String   @id @default(uuid())
-  test_code String   @db.Char(4)
+  test_code String   @default(uuid())
   test_name String   @db.VarChar(50)
+  attribute String?  @db.VarChar(50)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   DCTest    DCTest[]
+
+  @@unique([test_name, attribute])
 }
 
 model DiagnosticCenter {
@@ -80,14 +83,16 @@ model DiagnosticCenter {
 }
 
 model DCTest {
-  id                   String           @id @default(uuid())
-  diagnostic_center    DiagnosticCenter @relation(fields: [diagnostic_center_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  diagnostic_center_id String
+  id String @id @default(uuid())
+
+  diagnostic_center_code String
+  diagnostic_center      DiagnosticCenter @relation(fields: [diagnostic_center_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  diagnostic_center_id   String
 
   global_diagnosis_test    GlobalDiagnosisTest @relation(fields: [global_diagnosis_test_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   global_diagnosis_test_id String
 
-  base_price Float
+  base_price Float?
   cust_price Float
 
   createdAt                DateTime                   @default(now())
