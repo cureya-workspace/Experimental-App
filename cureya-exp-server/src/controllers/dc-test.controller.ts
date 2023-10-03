@@ -9,7 +9,7 @@ export default class DCTestController {
 
     // Validation block
     try {
-        console.log(query);
+        // Some validation
     } catch (error: any) {
       return res.send(400).json({
         success: false,
@@ -30,6 +30,14 @@ export default class DCTestController {
         },
       });
       const result = await prismaClient.dCTest.findMany({
+        include: {
+          global_diagnosis_test: {
+            select: {
+              test_name: true,
+              attribute: true
+            }
+          }
+        },
         where: {
           diagnostic_center_id: query.diagnostic_center_id
             ? query.diagnostic_center_id
@@ -51,12 +59,12 @@ export default class DCTestController {
           next: hasNextData
             ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
                 page + 1
-              }`
+              }${query.diagnostic_center_id ? '&diagnostic_center_id=' + query.diagnostic_center_id : ''}`
             : null,
           previous: hasPreviousData
             ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
                 page - 1
-              }`
+              }${query.diagnostic_center_id ? '&diagnostic_center_id=' + query.diagnostic_center_id : ''}`
             : null,
         },
         data: result,
@@ -109,6 +117,7 @@ export default class DCTestController {
       });
     }
   }
+  
   static async put() {}
   static async delete() {}
 }

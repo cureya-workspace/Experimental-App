@@ -24,9 +24,10 @@ model User {
   verified_email Boolean @default(false)
   // Add Date of birth
 
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  AuthToken AuthToken[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  AuthToken   AuthToken[]
+  Appointment Appointment[]
 }
 
 model AuthToken {
@@ -63,10 +64,10 @@ model DiagnosticCenter {
   pincode String @db.VarChar(18)
   city    String @db.VarChar(110)
 
-  diagnostic_center_code String @unique
-  contact_person_name  String? @db.VarChar(10)
-  contact_person_email String? @db.VarChar(50)
-  contact_person_phone String? @db.VarChar(12)
+  diagnostic_center_code String  @unique
+  contact_person_name    String? @db.VarChar(10)
+  contact_person_email   String? @db.VarChar(50)
+  contact_person_phone   String? @db.VarChar(12)
 
   operating_start_time String
   operating_end_time   String
@@ -86,8 +87,8 @@ model DiagnosticCenter {
 model DCTest {
   id String @id @default(uuid())
 
-  diagnostic_center      DiagnosticCenter @relation(fields: [diagnostic_center_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  diagnostic_center_id   String
+  diagnostic_center    DiagnosticCenter @relation(fields: [diagnostic_center_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  diagnostic_center_id String
 
   global_diagnosis_test    GlobalDiagnosisTest @relation(fields: [global_diagnosis_test_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   global_diagnosis_test_id String
@@ -102,6 +103,8 @@ model DCTest {
 
 model Appointment {
   id                   String           @id @default(uuid())
+  user                 User             @relation(references: [id], fields: [user_id], onDelete: Cascade, onUpdate: Cascade)
+  user_id              String
   diagnostic_centre    DiagnosticCenter @relation(fields: [diagnostic_center_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   diagnostic_center_id String
   visit_date           DateTime

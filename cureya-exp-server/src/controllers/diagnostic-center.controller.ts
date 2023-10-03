@@ -39,6 +39,8 @@ export class DiagnosticCenterController {
       skip: COUNT * (PAGE - 1),
       take: COUNT,
       select: {
+        id: true,
+        diagnostic_center_code: true,
         name: true,
         phone: true,
         address: true,
@@ -66,12 +68,24 @@ export class DiagnosticCenterController {
           next: hasNextData
             ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
                 PAGE + 1
-              }${params.pincode ? '&pincode=' + params.pincode : params.city ? '&city=' + params.city : ''}`
+              }${
+                params.pincode
+                  ? "&pincode=" + params.pincode
+                  : params.city
+                  ? "&city=" + params.city
+                  : ""
+              }`
             : null,
           previous: hasPreviousData
             ? `${req.protocol}://${req.get("host")}${req.baseUrl}?page=${
                 PAGE - 1
-              }${params.pincode ? '&pincode=' + params.pincode : params.city ? '&city=' + params.city : ''}`
+              }${
+                params.pincode
+                  ? "&pincode=" + params.pincode
+                  : params.city
+                  ? "&city=" + params.city
+                  : ""
+              }`
             : null,
         },
         data: result,
@@ -110,7 +124,7 @@ export class DiagnosticCenterController {
       assert(address, "Please provide address");
       assert(pincode, "Please provide pincode");
       assert(city, "Please provide city");
-      assert(diagnostic_center_code, 'Please provide diagnostic_center_code.')
+      assert(diagnostic_center_code, "Please provide diagnostic_center_code.");
       assert(operating_start_time, "Please provide operating start time");
       assert(operating_end_time, "Please provide operating end time");
       assert(center_type, "please provide center type");
