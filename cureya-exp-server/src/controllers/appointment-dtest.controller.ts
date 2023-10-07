@@ -10,7 +10,7 @@ import {
 
 export default class AppointmentDiagnosisTestController {
   static async get(req: Request, res: Response) {
-    const { appointment_id: appointmentId } = req.params;
+    const { appointment_id: appointmentId } = req.query as any;
 
     try {
       assert(appointmentId, "Please provide appointment id");

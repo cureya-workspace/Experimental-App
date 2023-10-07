@@ -4,15 +4,25 @@ import prismaClient from "../constants/prisma_client_singleton";
 
 export default class GlobalDiagnosisTestController {
   static async get(req: Request, res: Response) {
-    const { page: paramPage }: { page: string } = req.params as any;
+    const { page: paramPage, search }: { page: string, search?:string } = req.query as any;
     const LIMIT =
       Number.parseInt(process.env["ENTITY_COUNT_PER_PAGE"] as string) || 10;
     const page = Number.parseInt(paramPage) || 1;
 
     try {
-      const resultCount = await prismaClient.globalDiagnosisTest.count({});
+      const resultCount = await prismaClient.globalDiagnosisTest.count({
+        where: {
+          test_name: {
+            startsWith: search ? `%${search}%` : undefined,
+          }
+        },
+      });
       const result = await prismaClient.globalDiagnosisTest.findMany({
-        where: {},
+        where: {
+          test_name: {
+            startsWith: search ? `%${search}%` : undefined,
+          }
+        },
         skip: (page - 1) * LIMIT,
         take: LIMIT,
       });

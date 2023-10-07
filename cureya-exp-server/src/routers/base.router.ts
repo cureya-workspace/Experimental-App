@@ -5,10 +5,12 @@ import diagnosticCenterRouter from './diagnostic-center.router';
 import globalDiagnosticTestRouter from './global-test.router';
 import dCTestRouter from './dc-test.router';
 import appointmentRouter from './appointment.router';
+import searchRouter from './search.router';
 
 const baseRouter: Router = Router();
 
 // Routes
+baseRouter.use('/search', searchRouter);
 baseRouter.use('/user', userRouter);
 baseRouter.use('/auth', authRouter);
 baseRouter.use('/diagnostic-center', diagnosticCenterRouter);

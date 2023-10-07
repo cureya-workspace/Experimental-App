@@ -15,7 +15,9 @@ class Populate {
         .pipe(csv())
         .on("data", (data) => results.push(data))
         .on("end", () => resolve(results))
-        .on("error", (error) => reject(error));
+        .on("error", (error) => {
+          console.log(error);
+        });
     });
   }
 
@@ -27,7 +29,9 @@ class Populate {
         .pipe(csv())
         .on("data", (data) => results.push(data))
         .on("end", () => resolve(results))
-        .on("error", (error) => reject(error));
+        .on("error", (error) => {
+          console.log(error);
+        });
     });
   }
 
@@ -46,7 +50,7 @@ class Populate {
     return new Populate(data, prismaClient);
   }
 
-  private async populateDiagnosticCenters() {
+  async populateDiagnosticCenters() {
     const populateData = this.centersData.map((data: any) => {
       return {
         diagnostic_center_code: data.diagnostic_center_id,
@@ -75,7 +79,7 @@ class Populate {
     for (let index = 0; index < this.centersData.length; index++) {
       const element = this.centersData[index];
 
-      console.log(`${index+1}/${this.centersData.length}`)
+      console.log(`${index + 1}/${this.centersData.length}`);
 
       try {
         const dTests: any[] = await this.readCSVFile(
@@ -86,7 +90,6 @@ class Populate {
           const dTest = dTests[index];
           // Create a global test if not exist along with parameters
           if (dTest.test_cost.split("  ").length > 1) {
-            
             // Has Attributes
             let attribute: string =
               dTest.test_cost.split("  ")[
@@ -102,10 +105,9 @@ class Populate {
                 },
               },
             });
-            
+
             let globalTestId: string;
             if (count === 0) {
-            
               globalTestId = (
                 await prismaClient.globalDiagnosisTest.create({
                   data: {
@@ -114,10 +116,7 @@ class Populate {
                   },
                 })
               ).id;
-
-            
             } else {
-            
               const test = await prismaClient.globalDiagnosisTest.findUnique({
                 where: {
                   test_name_attribute: {
@@ -128,7 +127,6 @@ class Populate {
               });
 
               globalTestId = test?.id as string;
-            
             }
             const price: string = dTest.test_cost
               .split("  ")[0]
@@ -151,7 +149,6 @@ class Populate {
               },
             });
           } else if (dTest.test_cost.split("  ").length === 1) {
-            
             const count = await prismaClient.globalDiagnosisTest.count({
               where: {
                 AND: {
@@ -161,12 +158,8 @@ class Populate {
               },
             });
 
-
-            
-
             let globalTestId: string;
             if (count === 0) {
-            
               globalTestId = (
                 await prismaClient.globalDiagnosisTest.create({
                   data: {
@@ -174,9 +167,7 @@ class Populate {
                   },
                 })
               ).id;
-            
             } else {
-            
               const test = await prismaClient.globalDiagnosisTest.findFirst({
                 where: {
                   AND: {
@@ -187,7 +178,6 @@ class Populate {
               });
 
               globalTestId = test?.id as string;
-
             }
 
             const price: string = dTest.test_cost
@@ -217,12 +207,13 @@ class Populate {
       } catch (error: any) {
         console.log("TEST SKIPPED in", element.diagnostic_center_id);
       }
-      console.clear()
+      console.clear();
     }
   }
 }
 
 (async () => {
   const a: Populate = await Populate.init();
+  await a.populateDiagnosticCenters();
   await a.populateTests();
 })();
