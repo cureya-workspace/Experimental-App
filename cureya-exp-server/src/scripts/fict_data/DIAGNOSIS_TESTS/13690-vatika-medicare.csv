@@ -1,0 +1,13 @@
+test_name,test_cost
+2D Echo,"Rs. 2500.00"
+CT Scan,"Rs. 2200.00"
+ECG,"Rs. 400.00"
+EEG,"Rs. 3000.00"
+FNAC Test,"Rs. 3500.00"
+HSG Test,"Rs. 4500.00"
+MRI Scan,"Rs. 6000.00"
+NT Scan,"Rs. 1500.00"
+Pulmonary Function Test (PFT),"Rs. 3000.00"
+Sonography (Ultrasound / USG),"Rs. 1500.00"
+Stress Test (TMT),"Rs. 3000.00"
+X-Ray,"Rs. 400.00"

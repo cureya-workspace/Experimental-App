@@ -39,20 +39,18 @@ class _AddTestScreenState extends State<AddTestScreen> {
           _scrollController.position.maxScrollExtent) {
         page++;
         _fetch(page);
-        print('len ${_diagnosisTestList.length} $page');
       }
     });
   }
 
   _fetch([page = 1]) async {
     try {
-      print('CALLED');
       var data = await GlobalTestHelper.searchGlobalTests(searchQuery, page);
       if (data['paging']['next'] != null) {
         setState(() {
-          if (_diagnosisTestList.length == 0) {
+          if (_diagnosisTestList.isEmpty) {
             _diagnosisTestList = data['data'];
-          } else if (_diagnosisTestList.length > 0) {
+          } else if (_diagnosisTestList.isNotEmpty) {
             for (var gDiagnosisTest in data['data']) {
               _diagnosisTestList.add(gDiagnosisTest);
             }
@@ -83,7 +81,7 @@ class _AddTestScreenState extends State<AddTestScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
           children: [
-            const CustomAppBar(
+            CustomAppBar(
                 title: 'Search Tests',
                 description: 'Add the tests which you want to conduct'),
             const SizedBox(height: 6),
@@ -134,7 +132,6 @@ class _AddTestScreenState extends State<AddTestScreen> {
                       return GlobalDiagnosisTestListTile(
                           _diagnosisTestList[index]);
                     })),
-            const AddedTests ()
           ],
         ),
       )),

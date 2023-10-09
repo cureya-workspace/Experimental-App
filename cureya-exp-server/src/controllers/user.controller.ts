@@ -18,6 +18,8 @@ export class UserController {
     // Validations
     const { first_name, last_name, email, password, phone }: any = req.body;
 
+    console.log(req.body);
+
     const emailRegex: RegExp =
       /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     const phoneRegex: RegExp = /^(?:\+\d{1,3})?(?:\d{10,15})$/;
@@ -72,10 +74,17 @@ export class UserController {
 
       return res.json(newUser);
     } catch (error: any) {
-      return res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+      if( error.message.length > 50) {
+        return res.status(500).json({
+          success: false,
+          message: 'Something went wrong!',
+        });
+      } else {
+        return res.status(500).json({
+          success: false,
+          message: error.message,
+        });
+      }
     }
   }
 

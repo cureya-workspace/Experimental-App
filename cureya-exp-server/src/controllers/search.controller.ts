@@ -14,6 +14,8 @@ export default class SearchController {
       tests: string[];
     } = req.body;
 
+    console.log(req.body);
+
     // Validation block
     try {
     //   if (pincode || city) {

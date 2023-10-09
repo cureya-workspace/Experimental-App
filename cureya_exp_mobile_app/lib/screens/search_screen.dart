@@ -6,23 +6,27 @@ import 'package:cureya_exp_mobile_app/constants/constants.dart';
 import 'package:cureya_exp_mobile_app/context/search_tests_provider.dart';
 import 'package:cureya_exp_mobile_app/models/global_test.dart';
 import 'package:cureya_exp_mobile_app/screens/add_tests_screen.dart';
+import 'package:cureya_exp_mobile_app/screens/search_result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+  SearchScreen({super.key});
+  String? pincode = '';
+  String? city = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const CustomAppBar(
+                CustomAppBar(
+                  showLogoutButton: true,
                     title: 'Search Diagnostic Center',
                     description: 'Search Diagnostic Centers near you!'),
                 const SizedBox(height: 16),
@@ -30,7 +34,69 @@ class SearchScreen extends StatelessWidget {
                     style:
                         TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
                 const SizedBox(height: 8),
-                AddLocation(),
+                AutofillGroup(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 42,
+                        decoration: BoxDecoration(
+                            color: const Color.fromRGBO(243, 243, 243, 1),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                          child: TextFormField(
+                            maxLength: 6,
+                            keyboardType: TextInputType.number,
+                            validator: (String? val) {
+                              if (val!.isEmpty) {
+                                return "Cannot be empty";
+                              }
+                              if (!RegExp(
+                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                  .hasMatch(val)) {
+                                return "Please provide valid email";
+                              }
+                            },
+                            onChanged: (newValue) {
+                              pincode = newValue;
+                            },
+                            style: const TextStyle(fontSize: 14),
+                            decoration: const InputDecoration(
+                                counterText: "",
+                                hintText: 'Pincode',
+                                hintStyle: TextStyle(
+                                    color: Colors.black, fontSize: 14),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 14.3)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 22, child: OrDivider()),
+                      Container(
+                        height: 42,
+                        decoration: BoxDecoration(
+                            color: const Color.fromRGBO(243, 243, 243, 1),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                          child: TextFormField(
+                            onChanged: (val) {
+                              city = val;
+                            },
+                            style: const TextStyle(fontSize: 14),
+                            decoration: const InputDecoration(
+                                counterText: "",
+                                hintText: 'City',
+                                hintStyle: TextStyle(
+                                    color: Colors.black, fontSize: 14),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 14.3)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 16),
                 const Divider(
                   height: 0,
@@ -63,7 +129,13 @@ class SearchScreen extends StatelessWidget {
                 SizedBox(
                   width: double.maxFinite,
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => SearchResultScreen(
+                                pincode: pincode,
+                                city: city,
+                              )));
+                    },
                     color: const Color.fromRGBO(72, 187, 120, 1),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
@@ -75,73 +147,6 @@ class SearchScreen extends StatelessWidget {
                 ),
               ]),
         ),
-      ),
-    );
-  }
-}
-
-class AddLocation extends ConsumerWidget {
-  AddLocation({super.key}) : super();
-  String? pincode = '';
-  String? city = '';
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return AutofillGroup(
-      child: Column(
-        children: [
-          Container(
-            height: 42,
-            decoration: BoxDecoration(
-                color: const Color.fromRGBO(243, 243, 243, 1),
-                borderRadius: BorderRadius.circular(10)),
-            child: Center(
-              child: TextFormField(
-                maxLength: 6,
-                keyboardType: TextInputType.number,
-                validator: (String? val) {
-                  if (val!.isEmpty) {
-                    return "Cannot be empty";
-                  }
-                  if (!RegExp(
-                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                      .hasMatch(val)) {
-                    return "Please provide valid email";
-                  }
-                },
-                onSaved: (newValue) {
-                  pincode = newValue;
-                },
-                style: const TextStyle(fontSize: 14),
-                decoration: const InputDecoration(
-                    counterText: "",
-                    hintText: 'Pincode',
-                    hintStyle: TextStyle(color: Colors.black, fontSize: 14),
-                    border: InputBorder.none,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 12, vertical: 14.3)),
-              ),
-            ),
-          ),
-          const SizedBox(height: 22, child: OrDivider()),
-          Container(
-            height: 42,
-            decoration: BoxDecoration(
-                color: const Color.fromRGBO(243, 243, 243, 1),
-                borderRadius: BorderRadius.circular(10)),
-            child: Center(
-              child: TextFormField(
-                style: const TextStyle(fontSize: 14),
-                decoration: const InputDecoration(
-                    counterText: "",
-                    hintText: 'City',
-                    hintStyle: TextStyle(color: Colors.black, fontSize: 14),
-                    border: InputBorder.none,
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 12, vertical: 14.3)),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

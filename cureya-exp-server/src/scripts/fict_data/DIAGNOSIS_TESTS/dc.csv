@@ -1,0 +1,6 @@
+test_name,test_cost
+CT Scan,"Rs. 4500.00  (CT Chest / CT Pelvis / CT Neck (Rs. 1500/- extra for contrast, if required by doctor))"
+EEG,"Rs. 1000.00"
+MRI Scan,"Rs. 6500.00  (Brain / Cervical Spine / Lumbar Spine / Sacral Spine / Dorsal Spine / Thoracic Spine / Pelvis / Abdomen / MRCP / LIVER )"
+PET-CT Scan,"Rs. 23000.00  (PET Scan Full Body)"
+Sonography (Ultrasound / USG),"Rs. 2000.00  (Anomaly Scan)"

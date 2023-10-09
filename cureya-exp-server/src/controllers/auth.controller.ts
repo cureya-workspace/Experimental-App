@@ -86,7 +86,16 @@ export default class AuthController {
     }
   }
 
-  async logout(req: Request, res: Response): Promise<Response> {
-    return res.json({});
+  static async logout(req: Request, res: Response): Promise<Response> {    
+    await prismaClient.authToken.deleteMany({
+      where: {
+        user_id: (req.user! as any).id,
+      },
+    });
+    res.clearCookie('Authentication');
+    return res.json({
+      success: true,
+      message: 'successfully logged out'
+    });
   }
 }

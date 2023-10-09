@@ -1,0 +1,7 @@
+test_name,test_cost
+2D Echo,"Rs. 1000.00"
+CT Scan,"Rs. 2600.00  (Brain / Denta / Orbits)"
+MRI Scan,"Rs. 6700.00  (Plain: Brain or Abdomen or Ankle or Breast or Dorsal/Cervical/Lumber Spine or Elbow or Fetus or Fistulogram or Hand or Hip or Knee or Leg or Mastoids or Neck or Orbits or Pelvis or PNS or Sailogram or Shoulder. Rs. 3600 extra for Contrast.)"
+NT Scan,"Rs. 2000.00"
+Sonography (Ultrasound / USG),"Rs. 2500.00  (3D / 4D Ultrasound)"
+Stress Test (TMT),"Rs. 1000.00  (TMT)"

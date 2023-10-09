@@ -1,0 +1,7 @@
+test_name,test_cost
+CT Scan,"Rs. 2900.00"
+ECG,"Rs. 300.00  (12 lead)"
+Mammography,"Rs. 1200.00  (sono / digital)"
+Nerve Conduction Velocity (NCV),"Rs. 2500.00"
+Sonography (Ultrasound / USG),"Rs. 900.00  (2d / 3d / 4d)"
+X-Ray,"Rs. 300.00  (300 ma digital)"

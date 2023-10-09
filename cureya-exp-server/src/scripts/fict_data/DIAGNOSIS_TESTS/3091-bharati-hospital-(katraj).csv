@@ -1,0 +1,12 @@
+test_name,test_cost
+CT Scan,"Rs. 1750.00  (Brain)"
+Deposit Required (For Admission),"Rs. 100.00  (Deposit Amount is in Percentage of total estimate of Hernia Surgery)"
+Dialysis,"Rs. 1400.00  (Regular)"
+Doctor Visit Charges,"Rs. 300.00  (Semi Private ward / Private Ward / Deluxe Room)"
+General Ward,"Rs. 1500.00"
+Hernia Surgery,"Rs. 35000.00  (Umbilical Hernia - Deluxe Room)"
+MRI Scan,"Rs. 5000.00  (Brain Contrast)"
+Nursing Charges,"Rs. 50.00  (General ward)"
+OPD Consultation Fee,"Rs. 100.00  (Surgeon / Nephrologist)"
+Private Ward,"Rs. 5500.00  (Deluxe Room)"
+Semi Private Ward,"Rs. 2500.00"

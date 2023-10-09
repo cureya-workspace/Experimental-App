@@ -32,7 +32,7 @@ class HttpServiceSingleton {
       {required String url,
       Map<String, String>? queryParameters,
       required HTTPMethod method,
-      Map<String, String>? body,
+      Map<String, dynamic>? body,
       required Map<String, String> headers,
       bool includeAuthCredentials = false}) async {
     http.Response? response;

@@ -43,7 +43,7 @@ export default (passport: PassportStatic) => {
         });
 
         if (user?.id !== userId) {
-          throw new Error("Security Alert.");
+          throw new Error("Invalid session");
         }
 
         delete user["password"];

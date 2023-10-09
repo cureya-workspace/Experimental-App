@@ -1,3 +1,4 @@
+import 'package:cureya_exp_mobile_app/screens/create_user_screen.dart';
 import 'package:cureya_exp_mobile_app/screens/login_screen.dart';
 import 'package:cureya_exp_mobile_app/screens/search_screen.dart';
 // import 'package:cureya_exp_mobile_app/screens/search_screen.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SearchScreen(),
+      home: const LoginScreen(),
     );
   }
 }

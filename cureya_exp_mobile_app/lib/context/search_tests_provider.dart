@@ -5,7 +5,6 @@ class SearchTestListNotifier extends StateNotifier<List<GlobalDiagnosisTest>> {
   SearchTestListNotifier(): super([]);
   
   void addSearchTest(GlobalDiagnosisTest gdc) {
-    print("Updated");
     state = [...state, gdc];
     state = state;
   }

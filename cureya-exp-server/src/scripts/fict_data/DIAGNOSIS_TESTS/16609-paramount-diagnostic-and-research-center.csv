@@ -1,0 +1,7 @@
+test_name,test_cost
+Ambulance Service,"Rs. 700.00"
+Biopsy,"Rs. 2500.00  (USG GUIDED BIOPSY/F.N.A.C.)"
+CT Scan,"Rs. 3000.00  (HEAD WITH ORBIT-CONTRAST / PNS (AXIAL/COR)-CONTRAST)"
+MRI Scan,"Rs. 7500.00  (CT-ABDOMEN+MRI MRCP)"
+Sonography (Ultrasound / USG),"Rs. 3500.00  ( OBST USG FOR 3D)"
+X-Ray,"Rs. 1400.00  (FOOT(AP,LAT.OBLIQUE))"

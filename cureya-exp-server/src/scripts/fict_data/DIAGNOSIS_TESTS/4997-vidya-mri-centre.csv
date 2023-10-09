@@ -1,0 +1,5 @@
+test_name,test_cost
+CT Scan,"Rs. 5500.00  (IVP)"
+MRI Scan,"Rs. 6000.00  (Whole Abdomen)"
+Sonography (Ultrasound / USG),"Rs. 600.00  (Whole Abdomen / Abdomen)"
+X-Ray,"Rs. 600.00  (Both Knee)"

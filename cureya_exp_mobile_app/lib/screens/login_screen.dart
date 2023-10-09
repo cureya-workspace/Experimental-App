@@ -1,6 +1,7 @@
 import 'package:cureya_exp_mobile_app/components/appbar.dart';
 import 'package:cureya_exp_mobile_app/components/or_divider.dart';
 import 'package:cureya_exp_mobile_app/helpers/auth_helper.dart';
+import 'package:cureya_exp_mobile_app/screens/create_user_screen.dart';
 import 'package:cureya_exp_mobile_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,18 +12,18 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
+                Column(
                   children: [
                     CustomAppBar(
                         title: "Log In",
                         description:
                             "To find best and affordable healthcare service"),
-                    SizedBox(height: 14),
-                    LoginForm(),
+                    const SizedBox(height: 14),
+                    const LoginForm(),
                   ],
                 ),
                 const Expanded(child: SizedBox()),
@@ -32,7 +33,9 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       width: double.maxFinite,
                       child: MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => const CreateUserScreen()));
+                          },
                           elevation: 0,
                           color: const Color.fromRGBO(72, 187, 120, 1),
                           textColor: Colors.black,
@@ -145,14 +148,13 @@ class _LoginFormState extends State<LoginForm> {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Logged Successfully")));
+                        // ignore: use_build_context_synchronously
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => SearchScreen()));
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(e.toString())));
                       }
-
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => SearchScreen()));
                     }
                   },
                   elevation: 0,

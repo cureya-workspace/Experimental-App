@@ -1,0 +1,9 @@
+test_name,test_cost
+2D Echo,"Rs. 1300.00"
+CT Scan,"Rs. 3500.00  (Neck / Pelvis)"
+EEG,"Rs. 1300.00"
+Mammography,"Rs. 2500.00"
+MRI Scan,"Rs. 7000.00  (Whole Abdomen)"
+Sonography (Ultrasound / USG),"Rs. 2000.00  (Renal Doppler)"
+Stress Test (TMT),"Rs. 850.00"
+X-Ray,"Rs. 3000.00  (BMD ( Bone Mineral Density ) )"
