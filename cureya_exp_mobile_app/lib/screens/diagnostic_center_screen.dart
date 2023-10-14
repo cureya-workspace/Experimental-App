@@ -1,6 +1,8 @@
 import 'package:cureya_exp_mobile_app/components/appbar.dart';
+import 'package:cureya_exp_mobile_app/models/diagnostic_center.dart';
+import 'package:cureya_exp_mobile_app/screens/make_appointment_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class DiagnosticCenterScreen extends StatelessWidget {
   final Map searchResult;
@@ -21,7 +23,7 @@ class DiagnosticCenterScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding:  const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,31 +90,38 @@ class DiagnosticCenterScreen extends StatelessWidget {
                     color: const Color.fromRGBO(72, 187, 120, 1),
                     child: const Text("Book an Appointment"),
                     onPressed: () {
-                      showDialog(context: context, builder: (context) => Dialog(
-                        child: Padding(
-                          padding: const EdgeInsets.all(14),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const SizedBox(height: 10,),
-                              const Text("Contact Us", style: TextStyle(fontSize: 20)),
-                              const SizedBox(height: 24,),
-                              ...searchResult['phone'].split(',').map((e)=> ListTile(
-                                onTap: () async {
-                                  var url = Uri.parse('tel:$e');
-                                  if ((await canLaunchUrl(url))) {
-                                    await launchUrl(url);
-                                  }
-                                },
-                                title: Text(e),
-                              )),
-                              TextButton(onPressed: () {
-                                Navigator.pop(context);
-                              }, child: const Text("Cancel"))
-                            ],
-                          ),
-                        ),
-                      ));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => MakeAppointmentScreen(
+                                testList: searchResult['DCTest'],
+                                  diagnosticCenter:
+                                      DiagnosticCenter.fromMap(searchResult))));
+                      // showDialog(context: context, builder: (context) => Dialog(
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(14),
+                      //     child: Column(
+                      //       mainAxisSize: MainAxisSize.min,
+                      //       children: [
+                      //         const SizedBox(height: 10,),
+                      //         const Text("Contact Us", style: TextStyle(fontSize: 20)),
+                      //         const SizedBox(height: 24,),
+                      //         ...searchResult['phone'].split(',').map((e)=> ListTile(
+                      //           onTap: () async {
+                      //             var url = Uri.parse('tel:$e');
+                      //             if ((await canLaunchUrl(url))) {
+                      //               await launchUrl(url);
+                      //             }
+                      //           },
+                      //           title: Text(e),
+                      //         )),
+                      //         TextButton(onPressed: () {
+                      //           Navigator.pop(context);
+                      //         }, child: const Text("Cancel"))
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ));
                     }),
               )
             ],

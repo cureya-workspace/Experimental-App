@@ -90,6 +90,7 @@ class _LoginFormState extends State<LoginForm> {
                         .hasMatch(val)) {
                       return "Please provide valid email";
                     }
+                    return null;
                   },
                   onSaved: (newValue) {
                     credentials['email'] = newValue!;
@@ -117,6 +118,7 @@ class _LoginFormState extends State<LoginForm> {
                     if (val!.length < 6) {
                       return "Cannot be smaller than 6 characters";
                     }
+                    return null;
                   },
                   onSaved: (newValue) {
                     credentials['password'] = newValue!;

@@ -1,4 +1,4 @@
-String BASE_URI = 'http://206.189.140.169:3000/api/v1';
+String BASE_URI =  'http://10.0.2.2:3000/api/v1'; //'http://206.189.140.169:3000/api/v1'; // 
 List<String> servingCities = [
   'Agra',
   'Ahmedabad',

@@ -1,11 +1,8 @@
-import 'package:cureya_exp_mobile_app/components/added_tests_indicator.dart';
 import 'package:cureya_exp_mobile_app/components/appbar.dart';
 import 'package:cureya_exp_mobile_app/components/global_diagnosis_test_list_tile.dart';
-import 'package:cureya_exp_mobile_app/context/search_tests_provider.dart';
 import 'package:cureya_exp_mobile_app/helpers/global_test_helper.dart';
 import 'package:cureya_exp_mobile_app/models/global_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddTestScreen extends StatefulWidget {
   const AddTestScreen({super.key});
@@ -25,14 +22,6 @@ class _AddTestScreenState extends State<AddTestScreen> {
   @override
   void initState() {
     super.initState();
-    _textEditingController.addListener(() {
-      if (_textEditingController.text == ':clear_results') {
-        _textEditingController.text = '';
-        setState(() {
-          _diagnosisTestList = [];
-        });
-      }
-    });
     _scrollController.addListener(() {
       // Listen if more
       if (_scrollController.offset >=
@@ -45,7 +34,11 @@ class _AddTestScreenState extends State<AddTestScreen> {
 
   _fetch([page = 1]) async {
     try {
+      setState(() {
+        isLoading = true;
+      });
       var data = await GlobalTestHelper.searchGlobalTests(searchQuery, page);
+      print("DATA  ${data['paging']['next']}");
       if (data['paging']['next'] != null) {
         setState(() {
           if (_diagnosisTestList.isEmpty) {
@@ -56,7 +49,20 @@ class _AddTestScreenState extends State<AddTestScreen> {
             }
           }
         });
+      } else if (page == 1) {
+        setState(() {
+          if (_diagnosisTestList.isEmpty) {
+            _diagnosisTestList = data['data'];
+          } else if (_diagnosisTestList.isNotEmpty) {
+            for (var gDiagnosisTest in data['data']) {
+              _diagnosisTestList.add(gDiagnosisTest);
+            }
+          }
+        });
       }
+      setState(() {
+        isLoading = false;
+      });
     } catch (e) {
       print(e);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -119,9 +125,10 @@ class _AddTestScreenState extends State<AddTestScreen> {
                   ),
                 ),
                 IconButton(
-                    splashColor: Colors.transparent,
-                    onPressed: _fetch,
-                    icon: const Icon(Icons.search_outlined))
+                  splashColor: Colors.transparent,
+                  onPressed: _fetch,
+                  icon: const Icon(Icons.search_outlined),
+                )
               ],
             ),
             Expanded(
@@ -129,6 +136,7 @@ class _AddTestScreenState extends State<AddTestScreen> {
                     controller: _scrollController,
                     itemCount: _diagnosisTestList.length,
                     itemBuilder: (BuildContext context, int index) {
+                      // return Text("data");
                       return GlobalDiagnosisTestListTile(
                           _diagnosisTestList[index]);
                     })),

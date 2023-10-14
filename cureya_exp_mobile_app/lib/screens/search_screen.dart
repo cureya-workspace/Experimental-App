@@ -1,14 +1,9 @@
 import 'package:cureya_exp_mobile_app/components/appbar.dart';
-import 'package:cureya_exp_mobile_app/components/global_diagnosis_test_list_tile.dart';
 import 'package:cureya_exp_mobile_app/components/or_divider.dart';
 import 'package:cureya_exp_mobile_app/components/search_tests.dart';
-import 'package:cureya_exp_mobile_app/constants/constants.dart';
-import 'package:cureya_exp_mobile_app/context/search_tests_provider.dart';
-import 'package:cureya_exp_mobile_app/models/global_test.dart';
 import 'package:cureya_exp_mobile_app/screens/add_tests_screen.dart';
 import 'package:cureya_exp_mobile_app/screens/search_result_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({super.key});
@@ -55,6 +50,7 @@ class SearchScreen extends StatelessWidget {
                                   .hasMatch(val)) {
                                 return "Please provide valid email";
                               }
+                              return null;
                             },
                             onChanged: (newValue) {
                               pincode = newValue;

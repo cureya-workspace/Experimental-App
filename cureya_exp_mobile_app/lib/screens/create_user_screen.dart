@@ -3,7 +3,6 @@
 import 'package:cureya_exp_mobile_app/components/appbar.dart';
 import 'package:cureya_exp_mobile_app/components/or_divider.dart';
 import 'package:cureya_exp_mobile_app/helpers/auth_helper.dart';
-import 'package:cureya_exp_mobile_app/screens/login_screen.dart';
 import 'package:cureya_exp_mobile_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class CreateUserScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -30,7 +29,7 @@ class CreateUserScreen extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    OrDivider(),
+                    const OrDivider(),
                     SizedBox(
                       width: double.maxFinite,
                       child: MaterialButton(

@@ -5,7 +5,7 @@ class DiagnosticCenter {
   late String pincode;
   late String operatingStartTime;
   late String operatingEndTime;
-  late String doesHomeVisit;
+  late bool doesHomeVisit;
   late String city;
 
   DiagnosticCenter({
@@ -20,6 +20,8 @@ class DiagnosticCenter {
   });
 
   DiagnosticCenter.fromMap(Map diagnosticCenter) {
+    print(diagnosticCenter);
+
     name = diagnosticCenter['name'];
     address = diagnosticCenter['address'];
     pincode = diagnosticCenter['pincode'];

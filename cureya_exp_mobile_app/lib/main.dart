@@ -1,7 +1,4 @@
-import 'package:cureya_exp_mobile_app/screens/create_user_screen.dart';
 import 'package:cureya_exp_mobile_app/screens/login_screen.dart';
-import 'package:cureya_exp_mobile_app/screens/search_screen.dart';
-// import 'package:cureya_exp_mobile_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,5 +1,4 @@
 import 'package:cureya_exp_mobile_app/constants/constants.dart';
-import 'package:cureya_exp_mobile_app/models/diagnostic_center.dart';
 import 'package:cureya_exp_mobile_app/models/global_test.dart';
 import 'package:cureya_exp_mobile_app/services/http_service_singleton.dart';
 
