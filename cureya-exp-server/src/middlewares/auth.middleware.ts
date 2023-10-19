@@ -6,7 +6,6 @@ import {
 } from "passport-jwt";
 import { PassportStatic } from "passport";
 import prismaClient from "../constants/prisma_client_singleton";
-import { User } from "@prisma/client";
 
 const cookieExtractor = function (req: any) {
   let token: string | null = null;
@@ -32,17 +31,23 @@ export default (passport: PassportStatic) => {
         jwt_payload;
 
       try {
-        const user: User | any = await prismaClient.user.findFirst({
+        const userAuthToken: any = await prismaClient.authToken.findUnique({
           where: {
-            AuthToken: {
-              every: {
-                token: authToken,
-              },
-            },
+            token: authToken
           },
+          select: {
+            user: true,
+            token: true,
+          }
         });
 
-        if (user?.id !== userId) {
+        if (!userAuthToken) {
+          throw new Error("Invalid session");
+        }
+
+        const user = userAuthToken['user'];
+
+        if (userAuthToken?.user.id !== userId) {
           throw new Error("Invalid session");
         }
 

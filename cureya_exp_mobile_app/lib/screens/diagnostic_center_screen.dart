@@ -43,7 +43,7 @@ class DiagnosticCenterScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 8),
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        color: const Color.fromRGBO(247, 250, 252, 200),
+                        color: Colors.grey[100],
                         borderRadius: BorderRadius.circular(10)),
                     child: Text(searchResult['address']),
                   ),
@@ -55,7 +55,7 @@ class DiagnosticCenterScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(top: 8),
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                        color: const Color.fromRGBO(247, 250, 252, 200),
+                        color: Colors.grey[100],
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(
                       children: [
@@ -94,34 +94,9 @@ class DiagnosticCenterScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (_) => MakeAppointmentScreen(
-                                testList: searchResult['DCTest'],
+                                  testList: searchResult['DCTest'],
                                   diagnosticCenter:
                                       DiagnosticCenter.fromMap(searchResult))));
-                      // showDialog(context: context, builder: (context) => Dialog(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(14),
-                      //     child: Column(
-                      //       mainAxisSize: MainAxisSize.min,
-                      //       children: [
-                      //         const SizedBox(height: 10,),
-                      //         const Text("Contact Us", style: TextStyle(fontSize: 20)),
-                      //         const SizedBox(height: 24,),
-                      //         ...searchResult['phone'].split(',').map((e)=> ListTile(
-                      //           onTap: () async {
-                      //             var url = Uri.parse('tel:$e');
-                      //             if ((await canLaunchUrl(url))) {
-                      //               await launchUrl(url);
-                      //             }
-                      //           },
-                      //           title: Text(e),
-                      //         )),
-                      //         TextButton(onPressed: () {
-                      //           Navigator.pop(context);
-                      //         }, child: const Text("Cancel"))
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ));
                     }),
               )
             ],

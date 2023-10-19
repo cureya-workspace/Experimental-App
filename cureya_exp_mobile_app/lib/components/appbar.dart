@@ -1,6 +1,7 @@
 import 'package:cureya_exp_mobile_app/components/logout_button.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomAppBar extends StatelessWidget {
   final String title;
   final String description;
@@ -37,7 +38,12 @@ class CustomAppBar extends StatelessWidget {
               ),
             ),
             showLogoutButton != null && showLogoutButton == true
-                ? const LogoutButton()
+                ? Row(
+                  children: [
+                    const LogoutButton(),
+                    const AppointmentHistoryButton()
+                  ],
+                )
                 : const SizedBox()
           ],
         ),

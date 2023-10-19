@@ -18,8 +18,6 @@ export class UserController {
     // Validations
     const { first_name, last_name, email, password, phone }: any = req.body;
 
-    console.log(req.body);
-
     const emailRegex: RegExp =
       /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     const phoneRegex: RegExp = /^(?:\+\d{1,3})?(?:\d{10,15})$/;

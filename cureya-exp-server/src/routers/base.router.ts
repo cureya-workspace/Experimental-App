@@ -6,6 +6,7 @@ import globalDiagnosticTestRouter from './global-test.router';
 import dCTestRouter from './dc-test.router';
 import appointmentRouter from './appointment.router';
 import searchRouter from './search.router';
+import appointmentDTestRouter from './appointment-dtest.router';
 
 const baseRouter: Router = Router();
 
@@ -17,5 +18,6 @@ baseRouter.use('/diagnostic-center', diagnosticCenterRouter);
 baseRouter.use('/global-test', globalDiagnosticTestRouter);
 baseRouter.use('/dc-test', dCTestRouter); 
 baseRouter.use('/appointment', appointmentRouter);
+baseRouter.use('/appointment-dtest', appointmentDTestRouter);
 
 export default baseRouter; 

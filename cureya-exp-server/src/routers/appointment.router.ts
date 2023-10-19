@@ -21,4 +21,10 @@ appointmentRouter.post(
   AppointmentController.post
 );
 
+appointmentRouter.get(
+  "/:appointment_id",
+  passport.authenticate("jwt", { session: false }),
+  AppointmentController.getWithId
+);
+
 export default appointmentRouter;

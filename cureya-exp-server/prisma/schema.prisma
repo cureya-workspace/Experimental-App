@@ -35,7 +35,7 @@ model AuthToken {
 
   user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   user_id String @unique
-  token   String @default(uuid())
+  token   String @default(uuid()) @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -108,6 +108,7 @@ model Appointment {
   diagnostic_centre    DiagnosticCenter @relation(fields: [diagnostic_center_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   diagnostic_center_id String
   visit_date           DateTime
+  slot                 Slot             @default(morning)
   is_verified          Boolean          @default(false)
   status               String
   is_home_visit        Boolean          @default(false)
@@ -184,4 +185,10 @@ model DCTestReport {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum Slot {
+  morning
+  afternoon
+  evening
 }

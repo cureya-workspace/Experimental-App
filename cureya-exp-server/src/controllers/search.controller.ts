@@ -14,8 +14,6 @@ export default class SearchController {
       tests: string[];
     } = req.body;
 
-    console.log(req.body);
-
     // Validation block
     try {
     //   if (pincode || city) {
@@ -55,6 +53,7 @@ export default class SearchController {
               },
             },
             select: {
+              id: true,
               cust_price: true,
               global_diagnosis_test: {
                 select: {

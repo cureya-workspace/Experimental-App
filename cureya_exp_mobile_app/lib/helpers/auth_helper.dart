@@ -51,5 +51,4 @@ class AuthHelper {
 
     _storage.delete(key: 'Authorization');
   }
-
 }

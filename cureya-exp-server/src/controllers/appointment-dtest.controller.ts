@@ -15,7 +15,7 @@ export default class AppointmentDiagnosisTestController {
     try {
       assert(appointmentId, "Please provide appointment id");
     } catch (error: any) {
-      return res.json(400).json({
+      return res.status(400).json({
         success: false,
         message: error.message,
       });
@@ -33,7 +33,7 @@ export default class AppointmentDiagnosisTestController {
         data: result,
       });
     } catch (error: any) {
-      return res.json(400).json({
+      return res.status(400).json({
         success: false,
         message: error.message,
       });
@@ -78,7 +78,7 @@ export default class AppointmentDiagnosisTestController {
         throw new Error("Unauthorized appointment 2 !!");
       }
     } catch (error: any) {
-      return res.json(400).json({
+      return res.status(400).json({
         success: false,
         message: error.message,
       });
@@ -98,7 +98,7 @@ export default class AppointmentDiagnosisTestController {
         data: result,
       });
     } catch (error: any) {
-      return res.json({
+      return res.status(400).json({
         success: false,
         message: error.message,
       });

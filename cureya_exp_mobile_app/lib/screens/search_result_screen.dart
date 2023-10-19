@@ -25,7 +25,7 @@ class SearchResultScreen extends ConsumerWidget {
         Expanded(
             child: FutureBuilder(
           future: SearchHelper.performSearch(
-              pincode, city, ref.watch(searchTestProvider)),
+              pincode, city, ref.read(searchTestProvider)),
           builder: (context, snapshot) {
 
             if (snapshot.data == null) {

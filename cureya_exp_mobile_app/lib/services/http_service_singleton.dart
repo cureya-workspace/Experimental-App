@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -42,29 +43,38 @@ class HttpServiceSingleton {
       headers['Authorization'] = authToken!;
     }
 
-    switch (method) {
-      case HTTPMethod.GET:
-        response = await _client.get(Uri.parse(url), headers: headers);
-        break;
+    try {
+      switch (method) {
+        case HTTPMethod.GET:
+          response = await _client.get(Uri.parse(url), headers: headers);
+          break;
 
-      case HTTPMethod.POST:
-        response = await _client.post(Uri.parse(url),
-            headers: headers, body: json.encode(body));
-        break;
-      case HTTPMethod.PUT:
-        response =
-            await _client.put(Uri.parse(url), headers: headers, body: body);
-        break;
-      case HTTPMethod.DELETE:
-        response =
-            await _client.delete(Uri.parse(url), headers: headers, body: body);
-        break;
-      default:
-        throw "Invalid method";
+        case HTTPMethod.POST:
+          response = await _client.post(Uri.parse(url),
+              headers: headers, body: json.encode(body));
+          break;
+        case HTTPMethod.PUT:
+          response =
+              await _client.put(Uri.parse(url), headers: headers, body: body);
+          break;
+        case HTTPMethod.DELETE:
+          response = await _client.delete(Uri.parse(url),
+              headers: headers, body: body);
+          break;
+        default:
+          throw "Invalid method";
+      }
+    } catch (e) {
+      if (e is SocketException) {
+        throw "Could not connect to server!";
+      } else {
+        rethrow;
+      }
     }
 
     if (kDebugMode) {
       print('Status Code ${response.statusCode}');
+      print('Res ${response.body}');
     }
 
     Map resultBody = json.decode(response.body);

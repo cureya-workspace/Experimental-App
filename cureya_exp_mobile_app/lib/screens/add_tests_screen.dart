@@ -38,7 +38,6 @@ class _AddTestScreenState extends State<AddTestScreen> {
         isLoading = true;
       });
       var data = await GlobalTestHelper.searchGlobalTests(searchQuery, page);
-      print("DATA  ${data['paging']['next']}");
       if (data['paging']['next'] != null) {
         setState(() {
           if (_diagnosisTestList.isEmpty) {
