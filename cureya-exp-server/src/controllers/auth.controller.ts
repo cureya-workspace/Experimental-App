@@ -6,12 +6,14 @@ import { sign } from "jsonwebtoken";
 
 export default class AuthController {
   static async login(req: Request, res: Response): Promise<Response> {
-    const { email, password } = req.body;
+    console.log(req.body);
+    const { email, password, role } = req.body;
     const emailRegex: RegExp =
       /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     // validate
     try {
+
       assert(password, "Please provide password");
 
       if (!emailRegex.test(email)) {
@@ -38,6 +40,12 @@ export default class AuthController {
 
       if (!loginUser) {
         throw new Error("User with email " + email + " not found");
+      }
+
+      // Validate role
+      console.log(loginUser.role, role)
+      if (loginUser.role != role) {
+        throw new Error("Invalid user!");
       }
 
       // Validate password

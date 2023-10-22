@@ -12,7 +12,7 @@ class AuthHelper {
         url: '$BASE_URI/auth/login',
         method: HTTPMethod.POST,
         headers: {'content-type': 'application/json'},
-        body: {'email': email, 'password': password});
+        body: {'email': email, 'password': password, 'role': 1});
     
     
     if (kDebugMode) {
