@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import authMiddleware from "./middlewares/auth.middleware";
 import morgan from 'morgan';
 import handleError from "./middlewares/error-handler.middleware";
+import cors from 'cors';
 
 dotenv.config();
 
@@ -18,6 +19,9 @@ app.use(cookieParser());
 app.use(passport.initialize());
 authMiddleware(passport);
 app.use(morgan('tiny'))
+app.use(cors({
+  origin: 'http://localhost:3001'
+}));
 
 // Router
 app.use("/api/v1", baseRouter);
