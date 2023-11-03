@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Appointment, User } from "@prisma/client";
 import { Request, Response } from "express";
 import prismaClient from "../constants/prisma_client_singleton";
 import { Role } from "../constants/enums";
@@ -112,7 +112,54 @@ export default class AppointmentController {
       });
     }
   }
-  static async put(req: Request, res: Response) { }
+  static async put(req: Request, res: Response) { 
+    const {
+      status,
+      slot
+    } = req.body;
+    try {
+      const count = prismaClient.appointment.count({
+        where: {
+          id: req.params.appointment_id
+        }
+      });
+
+      if (!count) {
+        throw new Error('Appointment not found');
+      }
+
+
+    } catch (err: any) {
+      return res.status(400).json({
+        success: false,
+        message: err.message,
+      });
+    }
+
+    try {
+      console.log(req.params)
+      const nwAppointment = await prismaClient.appointment.update({
+        where: {
+          id: req.params.appointment_id
+        }, data: {
+          status: status,
+          slot: slot
+        }
+      })
+
+      return res.json({
+        success: true,
+        data: nwAppointment
+      })
+    } catch (err: any) {
+      console.log(err);
+      return res.status(400).json({
+        success: false,
+        message: err.message,
+      });
+    }
+
+  }
   static async delete(req: Request, res: Response) {}
 
   static async getWithId(req: Request, res: Response) {
@@ -156,6 +203,7 @@ export default class AppointmentController {
               name: true,
               city: true,
               address: true,
+              phone: user.role === Role.ADMIN 
             }
           },
           user: {

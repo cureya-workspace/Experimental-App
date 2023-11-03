@@ -79,8 +79,9 @@ export default class AuthController {
 
       return res
         .cookie("Authentication", `Bearer ${jwt}`, {
-          httpOnly: true,
+          httpOnly: false,
           secure: true,
+          sameSite: 'none'
         })
         .json({ success: true,
           user: loginUser,

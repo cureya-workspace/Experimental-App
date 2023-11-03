@@ -21,6 +21,15 @@ appointmentRouter.post(
   AppointmentController.post
 );
 
+appointmentRouter.put(
+  "/:appointment_id",
+  [
+    passport.authenticate("jwt", { session: false }),
+    RBACValidator([Role.ADMIN]),
+  ],
+  AppointmentController.put
+);
+
 appointmentRouter.get(
   "/:appointment_id",
   passport.authenticate("jwt", { session: false }),
